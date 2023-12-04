@@ -11,6 +11,8 @@ const initialState = {
   //loading, error, ready, active, finished
   status: "loading",
   questionIndex: 0,
+  answer: null,
+  points: 0,
 };
 
 const reducer = (state, action) => {
@@ -25,6 +27,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         status: "active",
+      };
+    case "ANSWER":
+      const question = state.questions.at(state.questionIndex);
+      return {
+        ...state,
+        answer: action.payload,
+        points:
+          action.payload === question.correctOption
+            ? state.points + question.points
+            : state.points,
       };
     case "RESET":
       return {
@@ -45,7 +57,7 @@ const reducer = (state, action) => {
 };
 
 function App() {
-  const [{ questions, status, questionIndex }, dispatch] = useReducer(
+  const [{ questions, status, questionIndex, answer }, dispatch] = useReducer(
     reducer,
     initialState,
   );
@@ -81,7 +93,11 @@ function App() {
           />
         )}
         {status === "active" && (
-          <Question question={questions[questionIndex]} />
+          <Question
+            question={questions[questionIndex]}
+            dispatch={dispatch}
+            answer={answer}
+          />
         )}
       </Main>
     </div>
