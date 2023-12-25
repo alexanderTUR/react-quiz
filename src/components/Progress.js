@@ -1,10 +1,8 @@
-export const Progress = ({
-  questionIndex,
-  numberOfQuestions,
-  points,
-  maxPoints,
-  answer,
-}) => {
+import { useQuiz } from "../contexts/QuizContext";
+
+export const Progress = () => {
+  const { numberOfQuestions, questionIndex, points, maxPoints, answer } =
+    useQuiz();
   return (
     <header className="progress">
       <progress
