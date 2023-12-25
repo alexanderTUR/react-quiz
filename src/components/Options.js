@@ -1,4 +1,7 @@
-export const Options = ({ question, dispatch, answer }) => {
+import { useQuiz } from "../contexts/QuizContext";
+
+export const Options = () => {
+  const { question, answer, dispatch } = useQuiz();
   const hasAnswered = answer !== null;
   return (
     <div className="options">
